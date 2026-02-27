@@ -4,13 +4,11 @@ import os
 import base64
 
 # ---------------------------------------------------
-# CONFIGURAÇÃO DA API DO GOOGLE
+# CONFIGURAÇÃO DA API DO GOOGLE (SUBSTITUI HUGGING FACE)
 # ---------------------------------------------------
-# O token é lido do Streamlit Secrets configurado no painel
+# Você deve configurar a GOOGLE_API_KEY no Streamlit Secrets
 GOOGLE_API_KEY = st.secrets.get("GOOGLE_API_KEY")
 genai.configure(api_key=GOOGLE_API_KEY)
-
-# Utilizamos o modelo flash para maior velocidade
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 # ---------------------------------------------------
@@ -113,7 +111,7 @@ def perguntar_ia(mensagens_historico):
         response = chat.send_message(full_prompt)
         return response.text
     except Exception as e:
-        return f"Erro de conexão. Tente novamente mais tarde. (Detalhe: {str(e)})"
+        return f"Erro de conexão: {str(e)}"
 
 # ---------------------------------------------------
 # EXIBIÇÃO DAS MENSAGENS E INTERAÇÃO
