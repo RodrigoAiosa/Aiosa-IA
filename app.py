@@ -6,9 +6,11 @@ import base64
 # ---------------------------------------------------
 # CONFIGURAÇÃO DA API DO GOOGLE
 # ---------------------------------------------------
-# O token é lido automaticamente do Streamlit Secrets configurado no painel
+# O token é lido do Streamlit Secrets
 GOOGLE_API_KEY = st.secrets.get("GOOGLE_API_KEY")
 genai.configure(api_key=GOOGLE_API_KEY)
+
+# Utilizamos o modelo mais recente para evitar erro 404
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 # ---------------------------------------------------
@@ -22,7 +24,6 @@ def get_base64_img(img_path):
     except Exception:
         return ""
 
-# Carrega a imagem do perfil do assistente
 img_base64 = get_base64_img("eu_ia_foto.jpg")
 
 # ---------------------------------------------------
@@ -101,15 +102,12 @@ def carregar_instrucoes():
     return "Você é o Alosa, assistente comercial estratégico do Rodrigo Aiosa."
 
 def perguntar_ia(mensagens_historico):
-    """Envia o histórico de chat para o Gemini com as instruções de persona"""
+    """Envia o histórico de chat para o Gemini"""
     try:
         instrucoes_persona = carregar_instrucoes()
-        
-        # Inicia chat no Gemini
         chat = model.start_chat(history=[])
         
-        # Constrói o prompt de sistema unindo as instruções com a pergunta atual
-        # Isso garante que a IA não esqueça as regras
+        # Constrói o prompt unindo as instruções com a pergunta atual
         full_prompt = f"{instrucoes_persona}\n\nPERGUNTA DO USUÁRIO: {mensagens_historico[-1]['content']}"
         
         response = chat.send_message(full_prompt)
@@ -123,7 +121,7 @@ def perguntar_ia(mensagens_historico):
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Exibe o histórico de mensagens
+# Exibe o histórico
 for msg in st.session_state.messages:
     tipo = "user" if msg["role"] == "user" else "bot"
     st.markdown(f'<div class="bubble {tipo}">{msg["content"]}</div>', unsafe_allow_html=True)
@@ -139,5 +137,4 @@ if prompt := st.chat_input("Como posso ajudar em seu projeto de dados?"):
         resposta = perguntar_ia(st.session_state.messages)
         st.session_state.messages.append({"role": "assistant", "content": resposta})
     
-    # Recarrega a página para exibir a nova mensagem
     st.rerun()
