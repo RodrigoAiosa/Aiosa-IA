@@ -103,7 +103,7 @@ def carregar_contexto():
 
 def perguntar_ia(messages):
     token = st.secrets.get("HF_TOKEN")
-    API_URL = "https://router.huggingface.co/v1/chat/completions"
+    API_URL = "https://api-inference.huggingface.co/models/meta-llama/Llama-3.2-3B-Instruct"
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
     payload = {
         "model": "meta-llama/Llama-3.2-3B-Instruct",
