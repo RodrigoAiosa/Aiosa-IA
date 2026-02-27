@@ -10,7 +10,7 @@ import base64
 GOOGLE_API_KEY = st.secrets.get("GOOGLE_API_KEY")
 genai.configure(api_key=GOOGLE_API_KEY)
 
-# Utilizamos o modelo mais recente para evitar erro 404
+# Utilizamos uma versão mais estável do modelo para evitar erro 404
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 # ---------------------------------------------------
