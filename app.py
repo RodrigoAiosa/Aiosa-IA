@@ -4,11 +4,13 @@ import os
 import base64
 
 # ---------------------------------------------------
-# CONFIGURAÇÃO DA API DO GOOGLE (SUBSTITUI HUGGING FACE)
+# CONFIGURAÇÃO DA API DO GOOGLE
 # ---------------------------------------------------
-# Você deve configurar a GOOGLE_API_KEY no Streamlit Secrets
+# O token é lido do Streamlit Secrets
 GOOGLE_API_KEY = st.secrets.get("GOOGLE_API_KEY")
 genai.configure(api_key=GOOGLE_API_KEY)
+
+# MUDANÇA AQUI: Utilizamos o nome correto do modelo
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 # ---------------------------------------------------
