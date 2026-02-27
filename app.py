@@ -6,11 +6,11 @@ import base64
 # ---------------------------------------------------
 # CONFIGURAÇÃO DA API DO GOOGLE
 # ---------------------------------------------------
-# O token é lido do Streamlit Secrets
+# O token é lido do Streamlit Secrets configurado no painel
 GOOGLE_API_KEY = st.secrets.get("GOOGLE_API_KEY")
 genai.configure(api_key=GOOGLE_API_KEY)
 
-# Utilizamos uma versão mais estável do modelo para evitar erro 404
+# Utilizamos o modelo flash para maior velocidade
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 # ---------------------------------------------------
