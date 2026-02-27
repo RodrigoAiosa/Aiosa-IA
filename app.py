@@ -11,7 +11,7 @@ GOOGLE_API_KEY = st.secrets.get("GOOGLE_API_KEY")
 genai.configure(api_key=GOOGLE_API_KEY)
 
 # MUDANÇA AQUI: Utilizamos o nome correto do modelo
-model = genai.GenerativeModel('gemini-1.5-flash-8b')
+model = genai.GenerativeModel('gemini-2.0-flash')
 
 # ---------------------------------------------------
 # FUNÇÃO PARA CARREGAR IMAGEM LOCAL (BASE64)
